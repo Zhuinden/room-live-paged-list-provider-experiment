@@ -1,0 +1,67 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    defaultConfig {
+        applicationId "com.zhuinden.roomlivepagedlistproviderexperiment"
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.github.Zhuinden:simple-stack:1.7.2'
+    // arch comps ( not beta2 because of https://www.reddit.com/r/androiddev/comments/758at4/weekly_questions_thread_october_09_2017/do4fsz1/
+    compile "android.arch.persistence.room:runtime:1.0.0-beta1"
+    compile "android.arch.paging:runtime:1.0.0-alpha2"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0-beta1"
+    compile "android.arch.lifecycle:runtime:1.0.0" // not necessary if you are using Support Library 26.1+
+    compile "android.arch.lifecycle:extensions:1.0.0-beta1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-beta1" // not needed if you are using the DefaultLifecycleObserver from common-java8 artifact.
+    compile "android.arch.paging:runtime:1.0.0-alpha2"
+
+    // dagger
+    compile 'com.google.dagger:dagger:2.11'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+
+    // dagger-android (should I use this?)
+    compile 'com.google.dagger:dagger-android:2.11'
+    compile 'com.google.dagger:dagger-android-support:2.11' // if you use the support libraries
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
+
+    //
+    testCompile 'junit:junit:4.12'
+}
+
+configurations.all {
+    resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.2"
+}
