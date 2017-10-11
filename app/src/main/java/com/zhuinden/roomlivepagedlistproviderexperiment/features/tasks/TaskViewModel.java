@@ -35,7 +35,7 @@ public class TaskViewModel
         super.onCleared();
     }
 
-    public void observeResults(LifecycleOwner lifecycleOwner, Observer<PagedList<Task>> observer) {
-        liveResults.observe(lifecycleOwner, observer);
+    public LiveData<PagedList<Task>> getTasks() {
+        return liveResults;
     }
 }

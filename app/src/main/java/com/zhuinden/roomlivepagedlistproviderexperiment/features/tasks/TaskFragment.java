@@ -30,11 +30,11 @@ public class TaskFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recycler_view);
-        TaskViewModel viewModel = ViewModelProviders.of(this).get(TaskViewModel.class); // should be in a fragment and stuff
+        TaskViewModel viewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         final TaskAdapter taskAdapter = new TaskAdapter();
         recyclerView.setAdapter(taskAdapter);
-        viewModel.observeResults(this, pagedList -> {
+        viewModel.getTasks().observe(this, pagedList -> {
             //noinspection Convert2MethodRef
             taskAdapter.setList(pagedList);
         });
