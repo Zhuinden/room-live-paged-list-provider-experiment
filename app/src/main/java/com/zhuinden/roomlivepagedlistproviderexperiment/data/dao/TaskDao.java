@@ -1,6 +1,6 @@
 package com.zhuinden.roomlivepagedlistproviderexperiment.data.dao;
 
-import android.arch.paging.LivePagedListProvider;
+import android.arch.paging.DataSource;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -16,7 +16,7 @@ import java.util.List;
 @Dao
 public interface TaskDao {
     @Query("SELECT * FROM " + Task.TABLE_NAME + " ORDER BY " + Task.COLUMN_DATE + " ASC ")
-    LivePagedListProvider<Integer, Task> tasksSortedByDate();
+    DataSource.Factory<Integer, Task> tasksSortedByDate();
 
     @Query("SELECT COUNT(*) FROM " + Task.TABLE_NAME)
     int count();

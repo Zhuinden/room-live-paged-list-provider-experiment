@@ -1,9 +1,8 @@
 package com.zhuinden.roomlivepagedlistproviderexperiment.features.tasks;
 
-import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
+import android.arch.paging.LivePagedListBuilder;
 import android.arch.paging.PagedList;
 
 import com.zhuinden.roomlivepagedlistproviderexperiment.application.Injector;
@@ -22,12 +21,14 @@ public class TaskViewModel
 
     public TaskViewModel() {
         taskDao = Injector.get().taskDao(); // should be provided by ViewModelProviders.Factory
-        liveResults = taskDao.tasksSortedByDate().create(0, new PagedList.Config.Builder() //
-                .setPageSize(20) //
-                .setPrefetchDistance(20) //
-                .setEnablePlaceholders(true) //
-                .build());
-
+        liveResults = new LivePagedListBuilder<>(taskDao.tasksSortedByDate(),
+                                                 new PagedList.Config.Builder() //
+                                                         .setPageSize(20) //
+                                                         .setPrefetchDistance(20) //
+                                                         .setEnablePlaceholders(true) //
+                                                         .build())
+                .setInitialLoadKey(0)
+                .build();
     }
 
     @Override
