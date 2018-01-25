@@ -1,9 +1,9 @@
 package com.zhuinden.realmlivepagedlistproviderexperiment.data.dao;
 
-import android.arch.paging.LivePagedListProvider;
+import android.arch.paging.LivePagedListBuilder;
+import android.arch.paging.PagedList;
 
 import com.zhuinden.realmlivepagedlistproviderexperiment.data.entity.Task;
-import com.zhuinden.realmlivepagedlistproviderexperiment.util.RealmLivePagedListProvider;
 import com.zhuinden.realmlivepagedlistproviderexperiment.util.RealmPaginationManager;
 
 import javax.inject.Inject;
@@ -23,9 +23,11 @@ public class TaskDao {
         this.realmPaginationManager = realmPaginationManager;
     }
 
-    public LivePagedListProvider<Integer, Task> tasksSortedByDate() {
-        return realmPaginationManager.createLivePagedListProvider(realm -> realm.where(Task.class)
-                .findAllSortedAsync("date"));
+    public LivePagedListBuilder<Integer, Task> tasksSortedByDate(PagedList.Config config) {
+        return realmPaginationManager.createPagedListBuilder(config, realm ->
+                realm.where(Task.class)
+                .sort("date")
+                .findAll());
     }
 
     public void insert(Task task) {

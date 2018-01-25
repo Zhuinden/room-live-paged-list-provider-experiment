@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class TaskFragment
         final TaskAdapter taskAdapter = new TaskAdapter();
         recyclerView.setAdapter(taskAdapter);
         viewModel.getTasks().observe(this, pagedList -> {
+            Log.i("TASK FRAGMENT", "OBSERVED CHANGE IN PAGED LIST.");
             //noinspection Convert2MethodRef
             taskAdapter.setList(pagedList);
         });

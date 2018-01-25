@@ -14,6 +14,9 @@ public class MainActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        RealmPaginationManager realmPaginationManager = Injector.get().realmPaginationManager();
+        realmPaginationManager.open();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         container = findViewById(R.id.container);
@@ -23,9 +26,6 @@ public class MainActivity
                     .add(R.id.container, new TaskFragment(), "TASK_FRAGMENT") //
                     .commit();
         }
-
-        RealmPaginationManager realmPaginationManager = Injector.get().realmPaginationManager();
-        realmPaginationManager.open();
     }
 
     @Override

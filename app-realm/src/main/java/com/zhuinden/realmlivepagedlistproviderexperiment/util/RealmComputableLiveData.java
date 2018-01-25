@@ -15,7 +15,6 @@
  */
 package com.zhuinden.realmlivepagedlistproviderexperiment.util;
 
-import android.arch.core.executor.ArchTaskExecutor;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.MainThread;
@@ -29,7 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Created by Zhuinden on 2017.10.27..
  */
 
-public abstract class RealmComputableLiveData<T> {
+abstract class RealmComputableLiveData<T> {
     private final MutableLiveData<T> mLiveData;
     private final RealmPaginationManager realmPaginationManager;
     private final RealmQueryExecutor realmQueryExecutor;

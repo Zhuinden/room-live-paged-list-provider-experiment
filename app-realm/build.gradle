@@ -33,21 +33,21 @@ dependencies {
     })
     implementation 'com.android.support:appcompat-v7:26.+'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.github.Zhuinden:simple-stack:1.8.0'
+    implementation 'com.github.Zhuinden:simple-stack:1.8.2'
 
-    implementation "android.arch.paging:runtime:1.0.0-alpha3"
-    implementation "android.arch.lifecycle:runtime:1.0.3" // not necessary if you are using Support Library 26.1+
-    implementation "android.arch.lifecycle:extensions:1.0.0-rc1"
-    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-rc1" // not needed if you are using the DefaultLifecycleObserver from common-java8 artifact.
+    implementation "android.arch.paging:runtime:1.0.0-alpha5"
+    implementation "android.arch.lifecycle:runtime:1.1.0" // not necessary if you are using Support Library 26.1+
+    implementation "android.arch.lifecycle:extensions:1.1.0"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.0" // not needed if you are using the DefaultLifecycleObserver from common-java8 artifact.
 
     // dagger
-    implementation 'com.google.dagger:dagger:2.11'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+    implementation 'com.google.dagger:dagger:2.14.1'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
 
     // dagger-android (should I use this?)
-    implementation 'com.google.dagger:dagger-android:2.11'
-    implementation 'com.google.dagger:dagger-android-support:2.11' // if you use the support libraries
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
+    implementation 'com.google.dagger:dagger-android:2.14.1'
+    implementation 'com.google.dagger:dagger-android-support:2.14.1' // if you use the support libraries
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.14.1'
 
     annotationProcessor 'dk.ilios:realmfieldnameshelper:1.1.1'
 

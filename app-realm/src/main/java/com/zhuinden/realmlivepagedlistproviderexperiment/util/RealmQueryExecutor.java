@@ -42,6 +42,8 @@ public class RealmQueryExecutor
         } else {
             if(realmPaginationManager.isHandlerThreadOpen()) {
                 handler.post(command);
+            } else {
+                throw new IllegalStateException("The handler thread is not open even though it should be");
             }
         }
     }

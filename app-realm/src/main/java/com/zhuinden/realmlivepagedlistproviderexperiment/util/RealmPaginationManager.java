@@ -15,7 +15,9 @@
  */
 package com.zhuinden.realmlivepagedlistproviderexperiment.util;
 
-import android.arch.paging.LivePagedListProvider;
+import android.arch.paging.DataSource;
+import android.arch.paging.LivePagedListBuilder;
+import android.arch.paging.PagedList;
 import android.os.Handler;
 import android.os.HandlerThread;
 
@@ -35,15 +37,27 @@ import io.realm.RealmModel;
 
 @Singleton
 public class RealmPaginationManager {
+    private static class RealmManagement {
+        private HandlerThread handlerThread;
+        private Handler handler;
+        private Realm workerRealm;
+
+        public RealmManagement(HandlerThread handlerThread, Handler handler, Realm workerRealm) {
+            this.handlerThread = handlerThread;
+            this.handler = handler;
+            this.workerRealm = workerRealm;
+        }
+    }
+
     private final Executor mainThreadExecutor = new RealmMainThreadExecutor();
     private AtomicReference<HandlerThread> handlerThread = new AtomicReference<>();
     private AtomicReference<Handler> handler = new AtomicReference<>();
-    private AtomicReference<RealmQueryExecutor> queryExecutor = new AtomicReference<>();
+    private AtomicReference<RealmQueryExecutor> realmQueryExecutor = new AtomicReference<>();
+    private AtomicReference<RealmManagement> realmManagement = new AtomicReference<>();
     private AtomicInteger openCount = new AtomicInteger();
-    private AtomicReference<Realm> workerRealm = new AtomicReference<>();
 
     @Inject
-    public RealmPaginationManager() {;
+    public RealmPaginationManager() {
     }
 
     public void open() {
@@ -61,39 +75,52 @@ public class RealmPaginationManager {
             }
             Handler handler = new Handler(handlerThread.getLooper());
             this.handler.set(handler);
-            this.queryExecutor.set(new RealmQueryExecutor(this, handler));
+            this.realmQueryExecutor.set(new RealmQueryExecutor(this, handler));
             handler.post(() -> {
-                workerRealm.set(Realm.getDefaultInstance()); // TODO: Support other configurations.
+                Realm realm = Realm.getDefaultInstance(); // TODO: Support other configurations.
+                realmManagement.set(new RealmManagement(handlerThread, handler, realm));
             });
         }
     }
 
     public void close() {
         if(openCount.decrementAndGet() == 0) {
-            handler.get().post(() -> {
-                workerRealm.get().close();
-                workerRealm.set(null);
-                handlerThread.get().quit();
-                handlerThread.set(null);
-                handler.set(null);
-            });
+            final RealmManagement management = realmManagement.get();
+            if(management != null) { // let's hope for the best
+                Handler handler = management.handler;
+                handler.post(() -> {
+                    Realm realm = management.workerRealm;
+                    realm.close();
+                    HandlerThread handlerThread = management.handlerThread;
+                    handlerThread.quit();
+                    realmManagement.set(null);
+                    realmQueryExecutor.set(null);
+                    this.handlerThread.set(null);
+                    this.handler.set(null);
+                });
+            }
         }
     }
 
     Realm getWorkerRealm() {
-        return workerRealm.get();
+        return realmManagement.get().workerRealm;
     }
 
     Executor getMainThreadExecutor() {
         return mainThreadExecutor;
     }
 
-    public <T extends RealmModel> LivePagedListProvider<Integer, T> createLivePagedListProvider(RealmQueryDefinition<T> queryDefinition) {
-        return new RealmLivePagedListProvider<>(this, queryDefinition);
+    public <T extends RealmModel> LivePagedListBuilder<Integer, T> createPagedListBuilder(PagedList.Config config, RealmQueryDefinition<T> queryDefinition) {
+        return new RealmLivePagedListBuilder<T>(this, createDataSourceFactory(queryDefinition), config) //
+                .setBackgroundThreadExecutor(getRealmQueryExecutor());
+    }
+
+    <T extends RealmModel> DataSource.Factory<Integer, T> createDataSourceFactory(RealmQueryDefinition<T> queryDefinition) {
+        return new RealmDataSourceFactory<>(this, queryDefinition);
     }
 
     RealmQueryExecutor getRealmQueryExecutor() {
-        return queryExecutor.get();
+        return realmQueryExecutor.get();
     }
 
     boolean isHandlerThreadOpen() {

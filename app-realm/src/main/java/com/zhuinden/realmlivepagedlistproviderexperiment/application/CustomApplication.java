@@ -8,7 +8,6 @@ import com.zhuinden.realmlivepagedlistproviderexperiment.application.injection.A
 import com.zhuinden.realmlivepagedlistproviderexperiment.application.injection.DaggerAppComponent;
 import com.zhuinden.realmlivepagedlistproviderexperiment.data.dao.TaskDao;
 import com.zhuinden.realmlivepagedlistproviderexperiment.data.entity.Task;
-import com.zhuinden.realmlivepagedlistproviderexperiment.util.RealmPaginationManager;
 
 import java.util.Date;
 import java.util.Random;
@@ -80,6 +79,34 @@ public class CustomApplication
             task.setDate(new Date());
             taskDao.insert(task);
         }, 10000);
+        handler.postDelayed(() -> {
+            Task task = new Task();
+            task.setId(random.nextInt(500) + 250);
+            task.setText("Banjo");
+            task.setDate(new Date());
+            taskDao.insert(task);
+        }, 12500);
+        handler.postDelayed(() -> {
+            Task task = new Task();
+            task.setId(random.nextInt(500) + 250);
+            task.setText("Theremin");
+            task.setDate(new Date());
+            taskDao.insert(task);
+        }, 15000);
+        handler.postDelayed(() -> {
+            Task task = new Task();
+            task.setId(random.nextInt(500) + 250);
+            task.setText("Pingas");
+            task.setDate(new Date());
+            taskDao.insert(task);
+        }, 17500);
+        handler.postDelayed(() -> {
+            Task task = new Task();
+            task.setId(random.nextInt(500) + 250);
+            task.setText("Wonky");
+            task.setDate(new Date());
+            taskDao.insert(task);
+        }, 20000);
     }
 
     public static CustomApplication get() {
