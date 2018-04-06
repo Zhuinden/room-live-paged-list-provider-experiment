@@ -111,8 +111,8 @@ public class RealmPaginationManager {
     }
 
     public <T extends RealmModel> LivePagedListBuilder<Integer, T> createPagedListBuilder(PagedList.Config config, RealmQueryDefinition<T> queryDefinition) {
-        return new RealmLivePagedListBuilder<T>(this, createDataSourceFactory(queryDefinition), config) //
-                .setBackgroundThreadExecutor(getRealmQueryExecutor());
+        return new LivePagedListBuilder<>(createDataSourceFactory(queryDefinition), config) //
+                .setFetchExecutor(getRealmQueryExecutor());
     }
 
     <T extends RealmModel> DataSource.Factory<Integer, T> createDataSourceFactory(RealmQueryDefinition<T> queryDefinition) {

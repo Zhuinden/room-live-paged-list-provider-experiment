@@ -25,7 +25,7 @@ import io.realm.RealmModel;
  */
 
 public class RealmDataSourceFactory<T extends RealmModel>
-        implements DataSource.Factory<Integer, T> {
+        extends DataSource.Factory<Integer, T> {
     private RealmPaginationManager realmPaginationManager;
     private final RealmQueryDefinition<T> queryDefinition;
 

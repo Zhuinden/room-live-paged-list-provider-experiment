@@ -1,7 +1,7 @@
 package com.zhuinden.realmlivepagedlistproviderexperiment.data.entity;
 
 import android.support.annotation.NonNull;
-import android.support.v7.recyclerview.extensions.DiffCallback;
+import android.support.v7.util.DiffUtil;
 
 import java.util.Date;
 
@@ -12,7 +12,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by Owner on 2017. 10. 09..
  */
 public class Task extends RealmObject {
-    public static DiffCallback<Task> DIFF_CALLBACK = new DiffCallback<Task>() {
+    public static DiffUtil.ItemCallback<Task> DIFF_CALLBACK = new DiffUtil.ItemCallback<Task>() {
         @Override
         public boolean areItemsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
             return oldItem.id == newItem.id;

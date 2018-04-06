@@ -38,7 +38,7 @@ public class TaskFragment
         viewModel.getTasks().observe(this, pagedList -> {
             Log.i("TASK FRAGMENT", "OBSERVED CHANGE IN PAGED LIST.");
             //noinspection Convert2MethodRef
-            taskAdapter.setList(pagedList);
+            taskAdapter.submitList(pagedList);
         });
     }
 }

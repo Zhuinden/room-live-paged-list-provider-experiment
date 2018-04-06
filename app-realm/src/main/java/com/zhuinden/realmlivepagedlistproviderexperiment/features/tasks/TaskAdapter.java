@@ -2,8 +2,6 @@ package com.zhuinden.realmlivepagedlistproviderexperiment.features.tasks;
 
 import android.arch.paging.PagedListAdapter;
 import android.support.annotation.NonNull;
-import android.support.v7.recyclerview.extensions.DiffCallback;
-import android.support.v7.recyclerview.extensions.ListAdapterConfig;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
