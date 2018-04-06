@@ -36,7 +36,7 @@ public class TaskFragment
         recyclerView.setAdapter(taskAdapter);
         viewModel.getTasks().observe(this, pagedList -> {
             //noinspection Convert2MethodRef
-            taskAdapter.setList(pagedList);
+            taskAdapter.submitList(pagedList);
         });
     }
 }

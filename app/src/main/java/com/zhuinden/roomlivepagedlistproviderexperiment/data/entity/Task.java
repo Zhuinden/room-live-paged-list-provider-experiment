@@ -4,7 +4,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
-import android.support.v7.recyclerview.extensions.DiffCallback;
+import android.support.v7.util.DiffUtil;
 
 import java.util.Date;
 
@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Entity(tableName = Task.TABLE_NAME)
 public class Task {
-    public static DiffCallback<Task> DIFF_CALLBACK = new DiffCallback<Task>() {
+    public static DiffUtil.ItemCallback<Task> DIFF_CALLBACK = new DiffUtil.ItemCallback<Task>() {
         @Override
         public boolean areItemsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
             return oldItem.id == newItem.id;
