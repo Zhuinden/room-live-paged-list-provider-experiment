@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://F:\Work\HomeProjects\room-live-paged-list-provider-experiment\RoomLivePagedListProviderExperiment.iml" filepath="F:\Work\HomeProjects\room-live-paged-list-provider-experiment\RoomLivePagedListProviderExperiment.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app-realm/app-realm.iml" filepath="$PROJECT_DIR$/app-realm/app-realm.iml" />
       <module fileurl="file://$PROJECT_DIR$/room-live-paged-list-provider-experiment.iml" filepath="$PROJECT_DIR$/room-live-paged-list-provider-experiment.iml" />
